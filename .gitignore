@@ -1,0 +1,33 @@
+build
+bin
+*~
+*.o
+*.a
+googletest/make/sample1_unittest
+
+doc/uml_diagrams/
+
+logs
+
+*.aux
+*.log
+*.toc
+*.gz
+*.pdf
+*.out
+
+CMakeLists.txt
+
+# Eclipse stuff
+.cproject
+.project
+
+# IntelliJ Idea stuff
+*.iml
+.idea
+config_gui/out
+config_gui/.idea
+*.class
+*.jar
+
+core

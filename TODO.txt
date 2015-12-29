@@ -1,0 +1,49 @@
+For Clion users:
+Create file CMakeLists.txt:
+
+        cmake_minimum_required(VERSION 3.3)
+
+        set(PROJECT_NAME "cpp_tutorial")
+        set(APP_NAME "cpp_tutorial")
+
+        project(${PROJECT_NAME})
+
+        MACRO(FIND_DIRS return_list regex)
+            FILE(GLOB_RECURSE new_list ${regex})
+            SET(dir_list "")
+            FOREACH(file_path ${new_list})
+                GET_FILENAME_COMPONENT(dir_path ${file_path} PATH)
+                SET(dir_list ${dir_list} ${dir_path})
+            ENDFOREACH()
+            LIST(REMOVE_DUPLICATES dir_list)
+            SET(${return_list} ${dir_list})
+        ENDMACRO()
+
+        FIND_DIRS(INC_DIRS ${APP_NAME}/include/*.h)
+        FIND_DIRS(SRC_DIRS ${APP_NAME}/src/*.cpp)
+        FIND_DIRS(TST_SRC_DIRS ${APP_NAME}/test/src/*.cpp)
+        FIND_DIRS(TST_INC_DIRS ${APP_NAME}/test/include/*.h)
+        FIND_DIRS(G_DIRS ./googletest/include/*.h)
+        FIND_DIRS(LIB_DIRS ${APP_NAME}/lib/*.h)
+
+        include_directories(${INC_DIRS})
+        include_directories(${SRC_DIRS})
+        include_directories(${TST_SRC_DIRS})
+        include_directories(${TST_INC_DIRS})
+        include_directories(${G_DIRS})
+        include_directories(${LIB_DIRS})
+
+        # To make clion see gtests header file - for unit tests
+        include_directories("./googletest/include")
+
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+        file(GLOB_RECURSE FILES
+                "${APP_NAME}/src/*.cpp"
+                "${APP_NAME}/include/*.h"
+                "${APP_NAME}/test/src/*.cpp"
+                "${APP_NAME}/test/include/*.h")
+
+        set(SPAM)
+
+        add_executable(${PROJECT_NAME} ${FILES} ${SPAM})
